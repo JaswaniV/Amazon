@@ -209,3 +209,34 @@
   margin-top: 11px;
   margin-bottom: 15px;
 }
+
+
+/* A14g */
+
+.js-new-quantity-input{
+  width: 30px;
+  display: none;
+}
+
+.save-quantity-link{
+  display: none;
+}
+
+.is-editing-quantity .new-quantity-input{
+  display: inline;
+}
+
+.is-editing-quantity .save-quantity-link{
+  display: inline;
+}
+
+
+/* 14i */
+
+.is-editing-quantity .quantity-label{
+  display: none;
+}
+
+.is-editing-quantity .update-quantity-link{
+  display: none;
+}

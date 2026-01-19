@@ -1,7 +1,7 @@
 // The product array is inside data/products.js file which is linked to amazon.html file
 // It will load that product array and then we will be using that here
 
-import { cart, addToCart } from "../data/cart.js";
+import { cart, addToCart, CalculatecartQuantity} from "../data/cart.js";
 import { products } from "../data/products.js";
 
 let productsHTML = "";
@@ -70,7 +70,10 @@ document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
 
 
-
+// A14
+let cq = CalculatecartQuantity();
+document.querySelector('.js-cart-quantity').innerHTML = cq;
+// A14
  
 
 
@@ -89,12 +92,10 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
 
     addToCart(productId, quantity);
 
-    let cartQuantity = 0;
-    cart.forEach( (cartItem) => {
-      cartQuantity += cartItem.quantity;
-    });
 
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+    //calculating cart quantity and updating it on the page
+    const cart_Quantity = CalculatecartQuantity();
+    document.querySelector('.js-cart-quantity').innerHTML = cart_Quantity; 
 
     
 

@@ -1,7 +1,7 @@
-import {cart,removeFromCart} from '../data/cart.js';
+import {cart,removeFromCart, UpdatecartQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 
-console.log("hello from checkout.js file");
+TotalItems();
 
 let cartSummaryHTML='';
 
@@ -34,11 +34,16 @@ cart.forEach( (cartItem) =>{
             </div>
             <div class="product-quantity">
                 <span>
-                Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                Quantity: <span class="quantity-label js-quantity-label">${cartItem.quantity}</span>
                 </span>
-                <span class="update-quantity-link link-primary">
-                Update
+                <span class="update-quantity-link link-primary js-update-quantity-link" data-product-id="${matchingProduct.id}">
+                Update  
                 </span>
+
+                <!-- A14g -->
+                <input type="text" class="new-quantity-input js-new-quantity-input">
+                <span class="save-quantity-link link-primary js-save-quantity-link" data-product-id="${matchingProduct.id}">Save</span>
+
                 <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
                 Delete
                 </span>
@@ -105,5 +110,65 @@ document.querySelectorAll('.js-delete-link').forEach( (link) => {
         //removing that product from the checkout page
         const container = document.querySelector(`.js-cart-item-container-${productId}`);
         container.remove();
+        TotalItems();
     })
 })
+
+
+
+//A14 
+//Update button functionallity
+document.querySelectorAll('.js-update-quantity-link').forEach( (link) =>{
+    link.addEventListener('click', () =>{
+        const productId = link.dataset.productId;
+        // console.log(productId);
+
+        const container = document.querySelector(`.js-cart-item-container-${productId}`);
+        container.classList.add('is-editing-quantity');
+
+    })
+} )
+
+
+//A14j
+
+//Save button functionality
+document.querySelectorAll('.js-save-quantity-link').forEach( (link) =>{
+    link.addEventListener('click', () =>{
+        const productId = link.dataset.productId;
+
+        const container = document.querySelector(`.js-cart-item-container-${link.dataset.productId}`);
+
+        container.querySelector('.js-new-quantity-input').value;
+        /* Here we are not using document because we dont'have to search the whole page 
+        we are already found that container where we clicked save not we want the input field
+        of that container/box only 
+        */
+
+        //update the cart data and quantity label on the page
+        const newQuantity = parseInt(container.querySelector('.js-new-quantity-input').value);
+        container.querySelector('.js-quantity-label').innerHTML=newQuantity;
+
+
+        // validation
+        if (newQuantity < 1 || newQuantity > 1000 || Number.isNaN(newQuantity)) {
+        alert('Quantity must be between 1 and 1000');
+        return;
+        }
+        UpdatecartQuantity(productId, newQuantity);
+
+
+        //remove editing mode
+        container.classList.remove('is-editing-quantity');
+
+    })
+})
+
+
+
+//function for showing the total number of items
+function TotalItems(){
+    let totalItems=0;
+    totalItems=cart.length;
+    document.querySelector('.js-checkout-total-quantity').innerHTML=`${totalItems} item${totalItems!==1?'s':''}`;
+}
