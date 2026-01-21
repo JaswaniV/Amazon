@@ -4,17 +4,9 @@ import {cart,removeFromCart, UpdatecartQuantity,updateDeliveryOption} from '../.
 import {products, getProduct} from '../../data/products.js';
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js"; //L15
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js'; //l15 deliveryOptions
+import { renderPaymentSummary } from './paymentSummary.js'; 
 
 TotalItems();
-
-// L15
-// const today = dayjs();
-// const delivery = today.add(7,'day');
-// console.log(delivery);
-// console.log(delivery.format('dddd, MMMM D'));
-// L15
-
-
 
 
 //L15
@@ -148,6 +140,7 @@ export function renderOrderSummary(){
         //removing that product from the checkout page
         const container = document.querySelector(`.js-cart-item-container-${productId}`);
         container.remove();
+        renderPaymentSummary();
         TotalItems();
     })
     })
@@ -194,6 +187,7 @@ export function renderOrderSummary(){
         return;
         }
         UpdatecartQuantity(productId, newQuantity);
+        renderPaymentSummary();
 
 
         //remove editing mode
@@ -239,6 +233,7 @@ export function renderOrderSummary(){
         //Updated the delivery date on the page Using DOM Manipulation
 
         renderOrderSummary();
+        renderPaymentSummary();
 
     })
     });

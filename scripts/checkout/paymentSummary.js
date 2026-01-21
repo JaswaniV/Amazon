@@ -19,12 +19,8 @@ export function renderPaymentSummary(){
 
     })
 
-    const totalPriceBeforeTax = productsPrice + 
-    shippingPrice;
-
-    const tax = totalPriceBeforeTax * 0.1;
-
-    const totalPrice = totalPriceBeforeTax + tax;
+    const totalPrice = productsPrice + 
+    shippingPrice; 
 
     const paymentSummaryHTML=`
         <div class="payment-summary-title">
@@ -38,22 +34,13 @@ export function renderPaymentSummary(){
 
           <div class="payment-summary-row">
             <div>Shipping &amp; handling:</div>
-            <div class="payment-summary-money">$Rs.${formatCurrency(shippingPrice)}</div>
+            <div class="payment-summary-money">Rs.${formatCurrency(shippingPrice)}</div>
           </div>
 
-          <div class="payment-summary-row subtotal-row">
-            <div>Total before tax:</div>
-            <div class="payment-summary-money">$Rs.${formatCurrency(totalPriceBeforeTax)}</div>
-          </div>
-
-          <div class="payment-summary-row">
-            <div>Estimated tax (10%):</div>
-            <div class="payment-summary-money">$Rs.${formatCurrency(tax)}</div>
-          </div>
 
           <div class="payment-summary-row total-row">
             <div>Order total:</div>
-            <div class="payment-summary-money">$Rs.${formatCurrency(totalPrice)}</div>
+            <div class="payment-summary-money">Rs.${formatCurrency(totalPrice)}</div>
           </div>
 
           <button class="place-order-button button-primary">
