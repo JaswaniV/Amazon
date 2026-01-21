@@ -74,3 +74,21 @@ export function UpdatecartQuantity(productId,newQuantity){
   } );
   saveToStorage();
 };
+
+
+
+// l15
+export function updateDeliveryOption(productId, deliveryOptionId) {
+  let matchingItem;
+
+  cart.forEach((cartItem) => {
+    if (cartItem.productId === productId) {
+      matchingItem = cartItem;
+    }
+  }); 
+
+  matchingItem.deliveryOptionId = deliveryOptionId;
+
+  //Saving to local Storage
+  saveToStorage();
+}
