@@ -3,8 +3,8 @@
 import {cart,removeFromCart, UpdatecartQuantity,updateDeliveryOption} from '../../data/cart.js';
 import {products, getProduct} from '../../data/products.js';
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js"; //L15
-import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js'; //l15 deliveryOptions
-import { renderPaymentSummary } from './paymentSummary.js'; 
+import {deliveryOptions, getDeliveryOption, calculateDeliveryDate } from '../../data/deliveryOptions.js'; //l15 deliveryOptions
+import { renderPaymentSummary } from './paymentSummary.js';  
 
 TotalItems();
 
@@ -21,11 +21,7 @@ export function renderOrderSummary(){
     const deliveryOptionId = cartItem.deliveryOptionId;
     const deliveryOption = getDeliveryOption(deliveryOptionId);
 
-    const today = dayjs()
-    const deliveryDate = today.add(deliveryOption.deliveryDays,'days');
-    const dateString = deliveryDate.format(
-    'dddd, MMMM D');
-
+    const dateString = calculateDeliveryDate(deliveryOption);
     //l15-deliveryOptions
 
     cartSummaryHTML+=`
@@ -83,43 +79,40 @@ export function renderOrderSummary(){
     //l15-deliveryOptions
 
     function deliveryOptionsHTML(matchingProduct, cartItem){
-    let html='';
-    deliveryOptions.forEach( (deliveryOption) => {
-    const today = dayjs()
-    const deliveryDate = today.add(deliveryOption.deliveryDays,'days');
-    const dateString = deliveryDate.format(
-        'dddd, MMMM D');
+        let html='';
+        deliveryOptions.forEach( (deliveryOption) => {
+            const dateString = calculateDeliveryDate(deliveryOption);
 
-    const priceString = deliveryOption.price
-    ===0
-        ? 'Free Shipping'
-        : `Rs.${deliveryOption.price} -`;
+            const priceString = deliveryOption.price
+            ===0
+                ? 'Free Shipping'
+                : `Rs.${deliveryOption.price} -`;
 
 
-        const isChecked =deliveryOption.id===cartItem.deliveryOptionId;
+                const isChecked =deliveryOption.id===cartItem.deliveryOptionId;
 
 
-        html+=`
-        <div class="delivery-option js-delivery-option"
-        data-product-id="${matchingProduct.id}"
-        data-delivery-option-id="${deliveryOption.id}">
-        <input type="radio" 
-            ${isChecked ? 'checked' :''}
-            class="delivery-option-input"
-            name="delivery-option-${matchingProduct.id}">
-            <div>
-            <div class="delivery-option-date">
-                ${dateString}
-            </div>
-            <div class="delivery-option-price">
-                ${priceString}  Shipping
-            </div>
-        </div>
-        </div>
-    `
-        
-    });
-    return html;
+                html+=`
+                <div class="delivery-option js-delivery-option"
+                data-product-id="${matchingProduct.id}"
+                data-delivery-option-id="${deliveryOption.id}">
+                <input type="radio" 
+                    ${isChecked ? 'checked' :''}
+                    class="delivery-option-input"
+                    name="delivery-option-${matchingProduct.id}">
+                    <div>
+                    <div class="delivery-option-date">
+                        ${dateString}
+                    </div>
+                    <div class="delivery-option-price">
+                        ${priceString}  Shipping
+                    </div>
+                </div>
+                </div>
+            `
+            
+        });
+        return html;
     }
 
 
