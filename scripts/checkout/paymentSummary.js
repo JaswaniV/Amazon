@@ -1,6 +1,10 @@
 import { getProduct } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { cart } from "../../data/cart.js";
+import { formatCurrency } from "../utils/money.js";
+
+
+
 export function renderPaymentSummary(){
     let productsPrice=0;
     let finalQuantity=0;
@@ -51,6 +55,3 @@ export function renderPaymentSummary(){
 
 }
 
-function formatCurrency(price) {
-  return (price).toFixed(2);
-}
