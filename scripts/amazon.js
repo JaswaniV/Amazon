@@ -88,7 +88,7 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
 
     //Get selected quantity from dropdown
     let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value);
-      console.log(quantity);
+      // console.log(quantity);
 
     addToCart(productId, quantity);
 

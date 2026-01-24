@@ -1,10 +1,30 @@
-export let cart = JSON.parse(localStorage.getItem("cart")) || [];
+export let cart;
+
+loadFromStorage(); // Jo hum  pehle kr rhe the bs usko function k through kr rhe h because we also needed that thing in cartTest.js
+
+//SOlution of the mocking
+export function loadFromStorage(){
+  cart =JSON.parse(localStorage.getItem("cart"));
+
+  if(!cart){
+    cart=[
+      {
+        productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
+        quantity: 1,
+        deliveryOptionId: '1'
+      }
+    ];
+  }
+  }
+
+
+
 
 export function saveToStorage() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-export function addToCart(productId,quantity) {
+export function addToCart(productId,quantity=1) /*Putting default quantity as 1 */ {
   let matchingItem;
 
   cart.forEach((cartItem) => {
