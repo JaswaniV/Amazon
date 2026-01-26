@@ -25,7 +25,8 @@ export function renderOrderSummary(){
     //l15-deliveryOptions
 
     cartSummaryHTML+=`
-    <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
+    <div class="cart-item-container  js-cart-item-container
+    js-cart-item-container-${matchingProduct.id}">
         <div class="delivery-date js-delivery-date">
             Delivery date: ${dateString}
         </div>
@@ -41,7 +42,7 @@ export function renderOrderSummary(){
             <div class="product-price">
                 ${matchingProduct.price}
             </div>
-            <div class="product-quantity">
+            <div class="product-quantity js-product-quantity-${matchingProduct.id}">
                 <span>
                 Quantity: <span class="quantity-label js-quantity-label">${cartItem.quantity}</span>
                 </span>
@@ -53,7 +54,7 @@ export function renderOrderSummary(){
                 <input type="text" class="new-quantity-input js-new-quantity-input">
                 <span class="save-quantity-link link-primary js-save-quantity-link" data-product-id="${matchingProduct.id}">Save</span>
 
-                <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
+                <span class="delete-quantity-link link-primary js-delete-link js-delete-link-${matchingProduct.id}" data-product-id="${matchingProduct.id}">
                 Delete
                 </span>
             </div>
@@ -121,8 +122,9 @@ export function renderOrderSummary(){
 
 
 
-
+//Putting the html on the page
     document.querySelector('.js-order-summary').innerHTML=cartSummaryHTML;
+    
 
     //delete functionality
     document.querySelectorAll('.js-delete-link').forEach( (link) => {
@@ -246,5 +248,9 @@ So instead of here we will export this function and import it in checkout.js and
 function TotalItems(){
     let totalItems=0;
     totalItems=cart.length;
-    document.querySelector('.js-checkout-total-quantity').innerHTML=`${totalItems} item${totalItems!==1?'s':''}`;
+
+    /* The changes in the code below is because of the reasont that in the test when the renderOrderSummary was called it is getting imported from the orderSummary.js file so In JS when we import something from a file it runs that file from top to bottom so in the test also when we are importing that function from orderSummary.js file it runs from top to bottom and when the TotalItem is running th etest could not find the element with class written below that is why it giving error that is why the below written code has been changed */
+    const element = document.querySelector('.js-checkout-total-quantity');
+    if(!element) return;
+    element.innerHTML=`${totalItems} item${totalItems!==1?'s':''}`
 }
