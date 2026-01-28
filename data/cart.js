@@ -96,8 +96,11 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
     }
   }); 
 
-  matchingItem.deliveryOptionId = deliveryOptionId;
+  if(matchingItem){
+    matchingItem.deliveryOptionId = deliveryOptionId;
 
-  //Saving to local Storage
-  saveToStorage();
+    //Saving to local Storage
+    saveToStorage();
+  }
+  else return;
 }
