@@ -29,7 +29,11 @@ class Product {
     this.image = productDetails.image;
     this.name = productDetails.name;
     this.rating = productDetails.rating;
-    this.price = productDetails.price;
+    this.price = productDetails.priceCents;
+    /*here I have used productDetails.priceCents because \
+    I am gettign the products array using the backed api
+    so it comes with array in which there is no proce field but priceCents feild therefore gpt suggested me this 
+*/
   }
 
   getStarsUrl() {
@@ -69,8 +73,30 @@ class Clothing extends Product {
 
 
 
+//Using backend to load products array
+export let products =[];
+
+export function loadProducts(renderProductGrid){
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener('load', () => {
+    products=JSON.parse(xhr.response).map((productDetails) => {
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails);
+    });
+    console.log('load products');
+
+    renderProductGrid();
+  });
+  xhr.open('GET', 'https://supersimplebackend.dev/products');
+  xhr.send();
+};
 
 
+
+
+/*
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -756,3 +782,4 @@ export const products = [
   }
   return new Product(productDetails);
 });
+*/
