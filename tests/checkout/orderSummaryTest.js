@@ -1,14 +1,14 @@
 import { loadFromStorage, cart } from '../../data/cart.js';
 import {renderOrderSummary,} from '../../scripts/checkout/orderSummary.js';
-import { loadProducts } from '../../data/products.js';
+import { loadProducts, loadProductsFetch } from '../../data/products.js';
 
 
 describe('Test suite: renderOrderSummary', () =>{
     //beore all hook for laoding the products
    beforeAll((done) => {
-    loadProducts(() => {
-        done();
-    }); 
+    loadProductsFetch().then( () => {
+      done();
+    });
    });
 
     //afterEach hook
