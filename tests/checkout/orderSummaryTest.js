@@ -1,8 +1,15 @@
 import { loadFromStorage, cart } from '../../data/cart.js';
-import {renderOrderSummary,} from '../../scripts/checkout/orderSummary.js'
+import {renderOrderSummary,} from '../../scripts/checkout/orderSummary.js';
+import { loadProducts } from '../../data/products.js';
 
 
 describe('Test suite: renderOrderSummary', () =>{
+    //beore all hook for laoding the products
+   beforeAll((done) => {
+    loadProducts(() => {
+        done();
+    }); 
+   });
 
     //afterEach hook
     afterEach( () => {
@@ -57,6 +64,9 @@ describe('Test suite: renderOrderSummary', () =>{
         */
 
         renderOrderSummary();
+        /*The rednerOrderSummary function create the left section
+        but to show the products we have not loaded the products array that's why it is giving error on the test page
+         */
     })
 
 
@@ -107,7 +117,11 @@ describe('Test suite : Update delivery option on clicking', () => {
     Add this afterEach hook if you want that the page should not contain the html
   */
 
-
+  beforeAll((done) => {
+    loadProducts(() => {
+        done();
+    }); 
+   });
 
   beforeEach( () => {
     cart.length=0;
