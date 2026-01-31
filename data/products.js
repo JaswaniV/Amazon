@@ -107,13 +107,6 @@ export function loadProductsFetch() {
 
 
 
-
-
-
-
-
-
-
 //Using backend to load products array
 export let products =[];
 
@@ -133,6 +126,10 @@ export function loadProducts(renderProductGrid){
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 };
+
+
+
+
 
 
 
