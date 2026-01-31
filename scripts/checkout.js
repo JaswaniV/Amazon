@@ -7,22 +7,31 @@ import { loadProducts, loadProductsFetch } from '../data/products.js';
 
 
 async function loadPage(){
-  await loadProductsFetch();
 
-  /*If using loadCart()
-    await new Promise((resolve) =>{
+  try{
+    // throw 'error1'
+    await loadProductsFetch();
+    /*If using loadCart()
+      cosnt value = await new Promise((resolve,reject) =>{
+          //throw 'error3';
         laodCart(() ={
-          resolve();
-        })
-      });
-  */
-
+            //reject('error')
+            resolve('value');
+          });
+        });
+    */
+    } catch(error){
+      console.log('Unexpected')
+  }
   renderOrderSummary();
   renderPaymentSummary();
 };
 
 loadPage();
 
+// [/*Error Handling
+// loadProducts()//Call this and check with internet off we will see the error handling we did before
+// */]
 
 
 //Promise Practice

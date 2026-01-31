@@ -87,6 +87,8 @@ export function loadProductsFetch() {
     });
 
     console.log('load products');
+  }).catch( () => {
+    console.log("Unexpected Error. Please try again letter") // we can pass the word error or event inside catch that will contain the error info
   });
 
   return promise;
@@ -123,6 +125,14 @@ export function loadProducts(renderProductGrid){
 
     renderProductGrid();
   });
+
+
+  /*Error hanling
+  xhr.addEventListener('error', () => {
+    console.log('Unexpedcted error. Please try again later')
+  })
+*/
+
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 };
